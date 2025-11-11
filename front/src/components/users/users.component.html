@@ -1,0 +1,58 @@
+<div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Korisnici</h1>
+        <a routerLink="/users/new" class="btn btn-primary" *ngIf="hasPermission('can_create_users')">
+          Dodaj korisnika
+        </a>
+      </div>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+      <div *ngIf="!hasPermission('can_read_users')" class="alert alert-danger">
+        Nemate dozvolu za citanje korisnika
+      </div>
+      
+      <table *ngIf="hasPermission('can_read_users')">
+        <thead>
+          <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Dozvole</th>
+            <th *ngIf="hasPermission('can_update_users') || hasPermission('can_delete_users')">Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td >
+              <a *ngIf="hasPermission('can_update_users')" 
+                
+                 style="color: #667eea; cursor: pointer;">
+                {{user.email}}
+              </a>
+              <span *ngIf="!hasPermission('can_update_users')">{{user.email}}</span>
+            </td>
+            <td>
+              <span class="badge badge-primary" *ngFor="let perm of user.permissions">
+                {{formatPermission(perm)}}
+              </span>
+            </td>
+            <td *ngIf="hasPermission('can_update_users') || hasPermission('can_delete_users')">
+              <button class="btn btn-danger" 
+                      *ngIf="hasPermission('can_delete_users')"
+                      (click)="deleteUser(user.id)">
+                Delete
+              </button>
+              <button class="btn btn-success"
+                      style="margin-top: 10px;" 
+                      *ngIf="hasPermission('can_update_users')"
+                       [routerLink]="['/users', user.id, 'edit']" 
+                      >
+                Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

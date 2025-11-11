@@ -1,0 +1,107 @@
+<div class="container">
+
+    <div class="machines-header">
+        <h1>Masine</h1>
+        <a routerLink="/machines/new" class="btn btn-primary" *ngIf="hasPermission('can_create_machines')">
+            Dodaj masinu
+        </a>
+    </div>
+    <div class="filter-form">
+        <h3>Filteri</h3>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Naziv</label>
+                <input type="text" [(ngModel)]="searchCriteria.name" placeholder="Pretrazi po nazivu">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select [(ngModel)]="selectedStatus">
+                    <option value="">Svi</option>
+                    <option value="RUNNING">RUNNING</option>
+                    <option value="STOPPED">STOPPED</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Datum kreiranja od</label>
+                <input type="date" [(ngModel)]="searchCriteria.dateFrom">
+            </div>
+            <div class="form-group">
+                <label>Datum kreiranja do</label>
+                <input type="date" [(ngModel)]="searchCriteria.dateTo">
+            </div>
+        </div>
+        <button class="btn btn-primary" (click)="search()">Pretrazi</button>
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">{{successMessage}}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+    <table>
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Tip</th>
+            <th>Opis</th>
+            <th>Status</th>
+            <th>Kreirao</th>
+            <th>Datum kreiranja</th>
+            <th *ngIf="hasAnyMachinePermission()">Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let machine of machines">
+            <td>{{machine.name}}</td>
+            <td>{{machine.type || '-'}}</td>
+            <td>{{machine.description || '-'}}</td>
+            <td>
+              <span class="machine-status" 
+                    [ngClass]="{'status-running': machine.status === 'RUNNING', 'status-stopped': machine.status === 'STOPPED'}">
+                {{machine.status}}
+                
+              </span>
+            </td>
+            <td>{{machine.createdByUserEmail}}</td>
+            <td>{{formatDate(machine.createdAt)}}</td>
+            <td *ngIf="hasAnyMachinePermission()">
+              <div class="action-buttons">
+                <button class="btn btn-success" 
+                        *ngIf="hasPermission('can_start_machines')"
+                        
+                        (click)="startMachine(machine.id)">
+                  Start
+                </button>
+                <button class="btn btn-warning" 
+                        *ngIf="hasPermission('can_stop_machines')"
+                        
+                        (click)="stopMachine(machine.id)">
+                  Stop
+                </button>
+                <button class="btn btn-primary" 
+                        *ngIf="hasPermission('can_restart_machines')"
+                        
+                        (click)="restartMachine(machine.id)">
+                  Restart
+                </button>
+                <button class="btn btn-danger" 
+                        *ngIf="hasPermission('can_destroy_machines')"
+                        
+                        (click)="destroyMachine(machine.id)">
+                  Destroy
+                </button>
+                <button class="btn btn-info btn-sm" 
+                        *ngIf="hasPermission('can_start_machines')"
+                        
+                        >
+                    Schedule
+                </button>
+                <button class="btn btn-info btn-sm" 
+                        *ngIf="hasPermission('can_search_machines')"
+                        (click)="createError(machine.id)"
+                        >
+                    Create ErrorLog
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

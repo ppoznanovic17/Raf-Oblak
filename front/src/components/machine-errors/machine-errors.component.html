@@ -1,0 +1,29 @@
+<div class="container">
+      <h1>Istorija gresaka</h1>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Vreme</th>
+            <th>Masina</th>
+            <th>Operacija</th>
+            <th>Poruka o greski</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let error of errors">
+            <td>{{formatDateTime(error.timestamp)}}</td>
+            <td>{{error.machineName}}</td>
+            <td>
+              <span class="badge badge-danger">{{error.operation}}</span>
+            </td>
+            <td>{{error.errorMessage}}</td>
+          </tr>
+          <tr *ngIf="errors.length === 0">
+            <td colspan="4" style="text-align: center;">Nema gresaka</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

@@ -1,0 +1,27 @@
+<div class="container">
+      <h1>Dodaj masinu</h1>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+      
+      <form (ngSubmit)="create()">
+        <div class="form-group">
+          <label>Naziv *</label>
+          <input type="text" [(ngModel)]="machine.name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Tip</label>
+          <input type="text" [(ngModel)]="machine.type" name="type">
+        </div>
+        
+        <div class="form-group">
+          <label>Opis</label>
+          <textarea [(ngModel)]="machine.description" name="description" rows="3"></textarea>
+        </div>
+        
+        <div class="action-buttons">
+          <button type="submit" class="btn btn-success">Kreiraj</button>
+          <button type="button" class="btn btn-danger" (click)="cancel()">Otkazi</button>
+        </div>
+      </form>
+    </div>
