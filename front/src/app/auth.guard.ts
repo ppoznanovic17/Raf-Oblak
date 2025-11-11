@@ -1,16 +1,18 @@
-import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  
   const router = inject(Router);
   const token = localStorage.getItem('token');
-
-  // Ako nema token i ruta nije /login → preusmeri
-  if (!token && state.url !== '/login') {
-    router.navigate(['/login']);
-    return false;
+  
+  if (token && state.url === '/login') {
+    return router.createUrlTree(['/machines']);
   }
 
-  // Ako ima token ili ide na /login → dozvoli
+  if (!token && state.url !== '/login') {
+    return router.createUrlTree(['/login']);
+  }
+
   return true;
 };

@@ -1,0 +1,101 @@
+##############################
+# 🌐 FRONTEND (Angular)
+##############################
+
+# Angular build output
+/front/dist/
+/front/.angular/
+/front/tmp/
+/front/out-tsc/
+
+# Node dependencies
+/front/node_modules/
+
+# Environment files
+/front/src/environments/*.ts
+/front/.env
+/front/.env.local
+/front/.env.development
+/front/.env.production
+
+# IDE/editor folders
+/front/.idea/
+/front/.vscode/
+.front/.history/
+.front/.DS_Store
+
+# Logs
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
+
+# Misc
+/front/package-lock.json
+/front/yarn.lock
+
+
+##############################
+# ☕ BACKEND (Java / Spring Boot)
+##############################
+
+# Maven build
+/back/target/
+/back/.mvn/wrapper/maven-wrapper.jar
+/back/.mvn/wrapper/maven-wrapper.properties
+
+# Gradle build (ako ikad koristiš)
+ /back/build/
+ /back/.gradle/
+
+# IDE/editor folders
+/back/.idea/
+/back/.vscode/
+/back/.classpath
+/back/.project
+/back/.settings/
+/back/.DS_Store
+
+# Logs
+/back/logs/
+/back/*.log
+
+# Environment files
+/back/.env
+/back/application-*.yml
+/back/application-*.properties
+/back/src/main/resources/application-*.yml
+/back/src/main/resources/application-*.properties
+
+# Misc
+/back/*.iml
+
+
+##############################
+# ⚙️ GLOBAL / SYSTEM-WIDE IGNORE
+##############################
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Git & temp
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# IntelliJ / Eclipse workspace
+.idea/
+.vscode/
+*.iml
+*.class
+*.log
+*.war
+*.jar
+*.ear
+
+# Backup & cache
+__pycache__/
+.cache/
+*.log
